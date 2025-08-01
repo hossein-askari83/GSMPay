@@ -7,6 +7,7 @@ RUN apt-get update && apt-get install -y \
     libjpeg-dev \
     libonig-dev \
     libxml2-dev \
+    libpq-dev \
     zip \
     unzip \
     curl \
@@ -14,7 +15,8 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     libssl-dev \
     supervisor \
-    && docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd zip
+    && docker-php-ext-install pdo pdo_pgsql pgsql mbstring exif pcntl bcmath gd zip
+
 
 # Redis extension
 RUN pecl install redis && docker-php-ext-enable redis
