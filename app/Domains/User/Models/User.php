@@ -3,6 +3,7 @@
 namespace App\Domains\User\Models;
 
 use App\Domains\Post\Models\Post;
+use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -44,5 +45,10 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims(): array
     {
         return [];
+    }
+
+    protected static function newFactory()
+    {
+        return UserFactory::new();
     }
 }
