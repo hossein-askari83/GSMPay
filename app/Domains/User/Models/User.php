@@ -2,8 +2,10 @@
 
 namespace App\Domains\User\Models;
 
+use App\Domains\File\Models\File;
 use App\Domains\Post\Models\Post;
 use Database\Factories\UserFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -29,6 +31,11 @@ class User extends Authenticatable implements JWTSubject
     public function posts(): HasMany
     {
         return $this->hasMany(related: Post::class);
+    }
+
+    public function profilePhoto(): BelongsTo
+    {
+        return $this->belongsTo(File::class, 'profile_file_id');
     }
 
     /**

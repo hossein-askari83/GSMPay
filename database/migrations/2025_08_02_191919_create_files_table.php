@@ -10,14 +10,14 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('files', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('mobile')->unique()->index();
-            $table->string('password');
-            $table->string('profile_photo_path')->nullable();
+            $table->string('disk');
+            $table->string('path')->index();
+            $table->string('mime_type');
+            $table->unsignedBigInteger('size');
+            $table->morphs('model'); // references owning entity (User, Post, etc.)
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -26,6 +26,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('files');
     }
 };
