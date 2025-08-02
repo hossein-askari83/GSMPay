@@ -26,7 +26,7 @@ class UserFactory extends Factory
         return [
             'name' => fake()->name(),
             'mobile' => fake()->unique()->regexify('09[0-3][0-9]{8}'),
-            'password' => bcrypt($this->password),
+            'password' => bcrypt(static::$password),
             'profile_photo_path' => null,
         ];
     }
