@@ -22,7 +22,6 @@ class PostFactory extends Factory
         return [
             'title' => fake()->sentence(6),
             'body' => fake()->paragraphs(3, true),
-            'views' => fake()->numberBetween(0, 1000),
         ];
     }
 }

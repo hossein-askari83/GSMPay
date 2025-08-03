@@ -2,19 +2,21 @@
 
 namespace App\Domains\User\Models;
 
+use App\Domains\File\Interfaces\FileOwnerInterface;
 use App\Domains\File\Models\File;
+use App\Domains\File\Traits\HasFiles;
 use App\Domains\Post\Models\Post;
 use Database\Factories\UserFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable implements JWTSubject, FileOwnerInterface
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasFiles;
 
     protected $fillable = [
         'name',
@@ -33,9 +35,14 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(related: Post::class);
     }
 
-    public function profilePhoto(): BelongsTo
+    public function files(): MorphMany
     {
-        return $this->belongsTo(File::class, 'profile_file_id');
+        return $this->morphMany(File::class, 'model');
+    }
+
+    public function getFileKey(): int|string
+    {
+        return $this->id;
     }
 
     /**
@@ -54,7 +61,7 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
-    protected static function newFactory()
+    protected static function newFactory(): UserFactory
     {
         return UserFactory::new();
     }

@@ -2,6 +2,7 @@
 
 namespace App\Domains\File\DTOs;
 
+use App\Domains\File\Enums\FileTypesEnum;
 use App\Domains\File\Models\File;
 
 class FileDTO
@@ -13,7 +14,8 @@ class FileDTO
     public string $mimeType,
     public int $size,
     public int $modelId,
-    public string $modelType
+    public string $modelType,
+    public FileTypesEnum $type,
   ) {
   }
 
@@ -27,6 +29,7 @@ class FileDTO
       'size' => $this->size,
       'model_id' => $this->modelId,
       'model_type' => $this->modelType,
+      'type' => $this->type->value,
     ];
   }
 
@@ -39,7 +42,8 @@ class FileDTO
       $file->mime_type,
       $file->size,
       $file->model_id,
-      $file->model_type
+      $file->model_type,
+      $file->type
     );
   }
 }

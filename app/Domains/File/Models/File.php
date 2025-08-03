@@ -13,7 +13,12 @@ class File extends Model
     'mime_type',
     'size',
     'model_type',
-    'model_id'
+    'model_id',
+    'type',
+  ];
+
+  protected $casts = [
+    'type' => \App\Domains\File\Enums\FileTypesEnum::class,
   ];
 
   public function model(): MorphTo

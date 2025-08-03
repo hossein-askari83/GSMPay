@@ -13,7 +13,6 @@ return new class extends Migration {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
 
-            // Foreign key to users
             $table->foreignId('user_id')
                 ->constrained()
                 ->onDelete('cascade')
@@ -21,9 +20,6 @@ return new class extends Migration {
 
             $table->string('title')->index();
             $table->text('body');
-
-            // View count, default 0
-            $table->unsignedBigInteger('views')->default(0)->index();
 
             $table->timestamps();
         });

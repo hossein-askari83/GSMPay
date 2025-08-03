@@ -15,7 +15,10 @@ return new class extends Migration {
             $table->string('name');
             $table->string('mobile')->unique()->index();
             $table->string('password');
-            $table->string('profile_photo_path')->nullable();
+
+            $table->unsignedBigInteger('profile_file_id')->nullable();
+            $table->foreign('profile_file_id')->references('id')->on('files')->nullOnDelete();
+
             $table->timestamps();
             $table->softDeletes();
         });

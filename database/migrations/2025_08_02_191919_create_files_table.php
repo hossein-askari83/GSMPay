@@ -1,5 +1,6 @@
 <?php
 
+use App\Domains\File\Enums\FileTypesEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,7 +17,8 @@ return new class extends Migration {
             $table->string('path')->index();
             $table->string('mime_type');
             $table->unsignedBigInteger('size');
-            $table->morphs('model'); // references owning entity (User, Post, etc.)
+            $table->morphs('model');
+            $table->enum('type', FileTypesEnum::toArray())->index();
             $table->timestamps();
         });
     }
