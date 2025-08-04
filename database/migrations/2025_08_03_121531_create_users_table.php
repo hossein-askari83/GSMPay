@@ -16,9 +16,6 @@ return new class extends Migration {
             $table->string('mobile')->unique()->index();
             $table->string('password');
 
-            $table->unsignedBigInteger('profile_file_id')->nullable();
-            $table->foreign('profile_file_id')->references('id')->on('files')->nullOnDelete();
-
             $table->timestamps();
             $table->softDeletes();
         });

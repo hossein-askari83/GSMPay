@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->string('disk');
             $table->string('path')->index();
             $table->string('mime_type');
+            $table->string('original_name');
             $table->unsignedBigInteger('size');
             $table->morphs('model');
             $table->enum('type', FileTypesEnum::toArray())->index();

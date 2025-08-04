@@ -13,11 +13,6 @@ use Illuminate\Support\Str;
 
 class FileService
 {
-
-  protected string $disk;
-
-  protected string $directory;
-
   public function __construct(
     private FileRepositoryInterface $repo
   ) {
@@ -27,13 +22,13 @@ class FileService
   public function upload(UploadedFile $file, FileOwnerInterface $owner, FileTypesEnum $type): FileDTO
   {
     $disk = $owner->getStorageDisk();
-    $directory = $owner->getStorageDirectory();
     $filename = Str::uuid() . '.' . $file->extension();
-    $path = Storage::disk($disk)->putFileAs($directory, $file, $filename);
+    $path = Storage::disk($disk)->putFileAs($type->value, $file, $filename);
     $dto = new FileDTO(
       id: null,
       disk: $disk,
       path: $path,
+      origianlName: $file->getClientOriginalName(),
       mimeType: $file->getMimeType(),
       size: $file->getSize(),
       modelId: $owner->getFileKey(),

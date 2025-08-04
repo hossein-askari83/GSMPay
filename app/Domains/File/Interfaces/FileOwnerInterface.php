@@ -14,5 +14,4 @@ interface FileOwnerInterface
   public function getGroupedFiles(): array;
 
   public function getStorageDisk(): string;
-  public function getStorageDirectory(): string;
 }
