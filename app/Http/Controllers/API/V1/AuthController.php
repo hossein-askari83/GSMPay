@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
-use App\Domains\User\Resources\UserResource;
+use App\Http\Resources\UserResource;
 use App\Domains\User\Services\UserService;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;

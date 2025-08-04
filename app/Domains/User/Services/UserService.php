@@ -2,7 +2,7 @@
 
 namespace App\Domains\User\Services;
 
-use App\Domains\User\Repositories\UserRepositoryInterface;
+use App\Domains\User\Interfaces\UserRepositoryInterface;
 use Illuminate\Support\Facades\Hash;
 
 class UserService
