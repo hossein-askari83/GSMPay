@@ -49,4 +49,21 @@ class FileDTO
       $file->type
     );
   }
+
+
+  public static function fromArray(array $file): self
+  {
+    $type = FileTypesEnum::from($file['type']) ?? null;
+    return new self(
+      $data['id'] ?? null,
+      $file['disk'],
+      $file['path'],
+      $file['original_name'],
+      $file['mime_type'],
+      $file['size'],
+      $file['model_id'],
+      $file['model_type'],
+      $type
+    );
+  }
 }

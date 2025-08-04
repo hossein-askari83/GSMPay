@@ -176,7 +176,7 @@ class ElasticsearchService
    * 
    * @param string $indexName
    * @param string $id
-   * @return array|string
+   * @return array
    */
   public function getIndexData($indexName, $id)
   {
@@ -185,7 +185,7 @@ class ElasticsearchService
       'body' => [
         'query' => [
           'match' => [
-            '_id' => $id
+            'id' => $id
           ]
         ]
       ]
@@ -197,7 +197,7 @@ class ElasticsearchService
       return $response['hits']['hits'][0];
     }
 
-    return 'Document not found';
+    return [];
   }
 
   /**

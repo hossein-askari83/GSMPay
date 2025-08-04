@@ -21,9 +21,7 @@ class FileRepository implements FileRepositoryInterface
 
   public function findOne(int $fileId): ?FileDTO
   {
-    if ($file = File::find($fileId)) {
-      return FileDTO::fromModel($file);
-    }
-    return null;
+    $file = File::find($fileId);
+    return $file ? FileDTO::fromModel($file) : null;
   }
 }

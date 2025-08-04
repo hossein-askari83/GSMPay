@@ -20,9 +20,6 @@ trait HasFiles
     );
   }
 
-  /**
-   * A single profile photo of this owner
-   */
   public function profilePhoto(): MorphOne
   {
     return $this->morphOne(File::class, 'model')

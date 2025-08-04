@@ -16,9 +16,15 @@ class FileService
   public function __construct(
     private FileRepositoryInterface $repo
   ) {
-
   }
 
+  /**
+   * Upload file on relative disk at file type path
+   * @param \Illuminate\Http\UploadedFile $file
+   * @param \App\Domains\File\Interfaces\FileOwnerInterface $owner
+   * @param \App\Domains\File\Enums\FileTypesEnum $type
+   * @return FileDTO
+   */
   public function upload(UploadedFile $file, FileOwnerInterface $owner, FileTypesEnum $type): FileDTO
   {
     $disk = $owner->getStorageDisk();
@@ -42,6 +48,11 @@ class FileService
     return $saved;
   }
 
+  /**
+   * Remove file and it's record on database
+   * @param int $fileId
+   * @return void
+   */
   public function delete(int $fileId): void
   {
     $file = $this->repo->findOne($fileId);

@@ -20,7 +20,7 @@ class RepositoryServiceProvider extends ServiceProvider
     {
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
         $this->app->bind(FileRepositoryInterface::class, FileRepository::class);
-        $this->app->bind(PostRepositoryInterface::class, ElasticsearchPostRepository::class);
+        $this->app->bind(PostRepositoryInterface::class, EloquentPostRepository::class);
 
     }
 
