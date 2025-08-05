@@ -13,11 +13,22 @@ return new class extends Migration {
         Schema::create('views', function (Blueprint $table) {
             $table->id();
             $table->morphs('viewable');
-            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('user_id')->nullable()
+                ->constrained()
+                ->nullOnDelete();
             $table->string('ip_address', 45)->nullable();
             $table->string('user_agent')->nullable();
             $table->timestamp('viewed_at')->useCurrent();
-            $table->unique(['viewable_type', 'viewable_id', 'user_id', 'ip_address'], 'unique_view');
+
+            $table->unique(
+                [
+                    'viewable_type',
+                    'viewable_id',
+                    'user_id',
+                    'ip_address'
+                ],
+                'unique_view'
+            );
         });
     }
 

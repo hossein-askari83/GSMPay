@@ -10,8 +10,8 @@ class FileRepository implements FileRepositoryInterface
 {
   public function save(FileDTO $dto): FileDTO
   {
-    $File = File::create($dto->toArray());
-    return FileDTO::fromModel($File);
+    $file = File::create($dto->toArray());
+    return FileDTO::fromModel($file);
   }
 
   public function delete(int $fileId): void
