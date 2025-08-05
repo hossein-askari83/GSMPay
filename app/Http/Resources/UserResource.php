@@ -12,8 +12,8 @@ class UserResource extends JsonResource
     return [
       'id' => $this->id,
       'mobile' => $this->mobile,
-      'profile_photo_url' => $this->getProfile()
-        ? asset("storage/{$this->getProfile()->path}")
+      'profile_photo_url' => $this->profilePhoto
+        ? asset("storage/{$this->profilePhoto->path}")
         : null,
     ];
   }

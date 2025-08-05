@@ -13,27 +13,28 @@ use Illuminate\Support\Str;
 
 class FileService
 {
-
-  protected string $disk;
-
-  protected string $directory;
-
   public function __construct(
     private FileRepositoryInterface $repo
   ) {
-
   }
 
+  /**
+   * Upload file on relative disk at file type path
+   * @param \Illuminate\Http\UploadedFile $file
+   * @param \App\Domains\File\Interfaces\FileOwnerInterface $owner
+   * @param \App\Domains\File\Enums\FileTypesEnum $type
+   * @return FileDTO
+   */
   public function upload(UploadedFile $file, FileOwnerInterface $owner, FileTypesEnum $type): FileDTO
   {
     $disk = $owner->getStorageDisk();
-    $directory = $owner->getStorageDirectory();
     $filename = Str::uuid() . '.' . $file->extension();
-    $path = Storage::disk($disk)->putFileAs($directory, $file, $filename);
+    $path = Storage::disk($disk)->putFileAs($type->value, $file, $filename);
     $dto = new FileDTO(
       id: null,
       disk: $disk,
       path: $path,
+      origianlName: $file->getClientOriginalName(),
       mimeType: $file->getMimeType(),
       size: $file->getSize(),
       modelId: $owner->getFileKey(),
@@ -47,6 +48,11 @@ class FileService
     return $saved;
   }
 
+  /**
+   * Remove file and it's record on database
+   * @param int $fileId
+   * @return void
+   */
   public function delete(int $fileId): void
   {
     $file = $this->repo->findOne($fileId);

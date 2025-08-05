@@ -2,7 +2,9 @@
 
 namespace App\Domains\User\Services;
 
+use App\Domains\User\DTOs\UserDTO;
 use App\Domains\User\Interfaces\UserRepositoryInterface;
+use App\Domains\User\Models\User;
 use Illuminate\Support\Facades\Hash;
 
 class UserService
@@ -18,7 +20,7 @@ class UserService
    * @param string $password
    * @return \App\Domains\User\Models\User|null
    */
-  public function validateCredentials(string $mobile, string $password): ?object
+  public function validateCredentials(string $mobile, string $password): ?User
   {
     $user = $this->repo->findByMobile($mobile);
 

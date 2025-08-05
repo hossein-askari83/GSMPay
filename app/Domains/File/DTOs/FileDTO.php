@@ -11,6 +11,7 @@ class FileDTO
     public ?int $id,
     public string $disk,
     public string $path,
+    public string $origianlName,
     public string $mimeType,
     public int $size,
     public int $modelId,
@@ -25,6 +26,7 @@ class FileDTO
       'id' => $this->id,
       'disk' => $this->disk,
       'path' => $this->path,
+      'original_name' => $this->origianlName,
       'mime_type' => $this->mimeType,
       'size' => $this->size,
       'model_id' => $this->modelId,
@@ -39,11 +41,29 @@ class FileDTO
       $file->id,
       $file->disk,
       $file->path,
+      $file->original_name,
       $file->mime_type,
       $file->size,
       $file->model_id,
       $file->model_type,
       $file->type
+    );
+  }
+
+
+  public static function fromArray(array $file): self
+  {
+    $type = FileTypesEnum::from($file['type']) ?? null;
+    return new self(
+      $data['id'] ?? null,
+      $file['disk'],
+      $file['path'],
+      $file['original_name'],
+      $file['mime_type'],
+      $file['size'],
+      $file['model_id'],
+      $file['model_type'],
+      $type
     );
   }
 }

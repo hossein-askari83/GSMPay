@@ -16,8 +16,8 @@ class UploadUserProfilePhotoAction
 
   public function execute(User $user, UploadedFile $file): void
   {
-    if ($user->getProfile()) {
-      $this->fileService->delete($user->getProfile()->id);
+    if ($user->profilePhoto) {
+      $this->fileService->delete($user->profilePhoto->id);
     }
 
     $this->fileService->upload($file, $user, FileTypesEnum::PROFILE);

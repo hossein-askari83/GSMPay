@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'es' => [
+        'host' => env('ES_HOST'),
+        'username' => env('ES_USERNAME',""),
+        'password' => env('ES_PASSWORD',"")
+    ],
+
 ];

@@ -28,7 +28,6 @@ class UserFactory extends Factory
             'name' => fake()->name(),
             'mobile' => fake()->unique()->regexify('09[0-3][0-9]{8}'),
             'password' => bcrypt(static::$password),
-            'profile_file_id' => null,
         ];
     }
 }

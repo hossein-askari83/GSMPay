@@ -5,6 +5,7 @@ namespace App\Domains\File\Traits;
 use App\Domains\File\DTOs\FileDTO;
 use App\Domains\File\Enums\FileTypesEnum;
 use App\Domains\File\Models\File;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 trait HasFiles
 {
   public function getGroupedFiles(): array
@@ -19,22 +20,14 @@ trait HasFiles
     );
   }
 
-  public function getProfile(): ?FileDTO
+  public function profilePhoto(): MorphOne
   {
-    $profile = $this->files()
-      ->where('type', FileTypesEnum::PROFILE->value)
-      ->latest()
-      ->first();
-
-    return $profile ? FileDTO::fromModel($profile) : null;
+    return $this->morphOne(File::class, 'model')
+      ->where('type', FileTypesEnum::PROFILE->value);
   }
 
   public function getStorageDisk(): string
   {
-    return config('file.disk');
-  }
-  public function getStorageDirectory(): string
-  {
-    return config('file.directories.default');
+    return config('filesystems.default');
   }
 }
