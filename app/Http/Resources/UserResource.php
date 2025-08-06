@@ -15,6 +15,10 @@ class UserResource extends JsonResource
       'profile_photo_url' => $this->profilePhoto
         ? asset("storage/{$this->profilePhoto->path}")
         : null,
+      'total_views' => $this->when(
+        isset($this->total_views),
+        $this->total_views
+      ),
     ];
   }
 }

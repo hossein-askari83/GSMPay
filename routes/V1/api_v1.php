@@ -9,8 +9,11 @@ Route::prefix('v1')->group(function (): void {
   Route::post('/auth/login', [AuthController::class, 'login']);
 
   Route::middleware('jwt')->group(function (): void {
+    Route::post('/auth/refresh', [AuthController::class, 'refresh']);
+
     Route::prefix('user')->group(function (): void {
       Route::post('/profile', [UserController::class, 'uploadProfile']);
+      Route::get('/top-viewd', [UserController::class, 'topViewedUsers']);
     });
 
     Route::prefix('post')->group(function (): void {

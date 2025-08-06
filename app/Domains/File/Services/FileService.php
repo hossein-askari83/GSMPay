@@ -3,7 +3,6 @@
 namespace App\Domains\File\Services;
 
 use App\Domains\File\Enums\FileTypesEnum;
-use App\Domains\File\Events\FileUploadedEvent;
 use App\Domains\File\DTOs\FileDTO;
 use App\Domains\File\Interfaces\FileOwnerInterface;
 use App\Domains\File\Interfaces\FileRepositoryInterface;
@@ -43,7 +42,6 @@ class FileService
     );
 
     $saved = $this->repo->save($dto);
-    event(new FileUploadedEvent($saved, $owner));
 
     return $saved;
   }

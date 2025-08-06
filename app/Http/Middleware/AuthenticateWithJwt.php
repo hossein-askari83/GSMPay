@@ -19,11 +19,11 @@ class AuthenticateWithJwt
    */
   public function handle(Request $request, Closure $next): Response
   {
-    // try {
+    try {
       JWTAuth::parseToken()->authenticate();
-    // } catch (Exception $e) {
-    //   return response()->json(['error' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
-    // }
+    } catch (Exception $e) {
+      return response()->json(['error' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
+    }
 
     return $next($request);
   }

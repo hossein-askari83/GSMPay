@@ -18,7 +18,7 @@ class UploadProfileRequest extends FormRequest
         'required',
         'file',
         'mimes:jpg,jpeg,png,gif',
-        'max:10240',  // max 10MB
+        'max:2048',  // max 2MB
       ],
     ];
   }
@@ -29,7 +29,7 @@ class UploadProfileRequest extends FormRequest
       'photo.required' => 'A profile photo is required.',
       'photo.file' => 'The upload must be a file.',
       'photo.mimes' => 'Allowed file types: jpg, jpeg, png, gif.',
-      'photo.max' => 'Maximum file size is 10MB.',
+      'photo.max' => 'Maximum file size is 2MB.',
     ];
   }
 }

@@ -10,11 +10,25 @@ use App\Domains\View\Services\{
   KafkaViewCounter
 };
 
+/**
+ * Service provider for view-related services and event handling.
+ *
+ * Registers the appropriate ViewCounterInterface implementation based on configuration
+ * and sets up event listeners for view tracking functionality.
+ *
+ * @package App\Providers
+ */
 class ViewServiceProvider extends ServiceProvider
 {
+  /**
+   * Register view counter service bindings.
+   *
+   * Binds ViewCounterInterface to the appropriate implementation based on
+   * the configuration (database or kafka).(could use a config file)
+   */
   public function register(): void
   {
-    $driver = config('view_counter.driver', 'kafka');
+    $driver = 'kafka';
 
     $map = [
       'database' => ViewCounter::class,
@@ -26,6 +40,9 @@ class ViewServiceProvider extends ServiceProvider
     $this->app->bind(ViewCounterInterface::class, $impl);
   }
 
+  /**
+   * Bootstrap any application services.
+   */
   public function boot(): void
   {
     Event::listen(
