@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Domains\Post\Interfaces\PostRepositoryInterface;
 use App\Domains\Post\Repositories\EloquentPostRepository;
 use App\Services\ElasticsearchService;
 use Illuminate\Console\Command;
