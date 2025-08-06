@@ -11,6 +11,19 @@ use Junges\Kafka\Facades\Kafka;
 use Illuminate\Console\Command;
 use Junges\Kafka\Message\ConsumedMessage;
 
+/**
+ * Kafka consumer command for processing "viewed" events.
+ * 
+ * This command subscribes to the "viewed" Kafka topic and processes incoming
+ * view events. It converts the event data to a ViewDTO and stores it in the
+ * database through the ViewRepository. The command handles duplicate views
+ * gracefully by catching QueryExceptions and logs all processing activities.
+ * 
+ * Usage:
+ * php artisan kafka:consume-viewed
+ * 
+ * @package App\Console\Commands
+ */
 class ConsumeViewed extends Command
 {
 

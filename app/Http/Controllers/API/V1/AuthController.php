@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
-use App\Http\Resources\GeneralResource;
 use App\Http\Resources\UserResource;
 use App\Domains\User\Services\UserService;
 use Illuminate\Http\JsonResponse;
@@ -45,6 +44,22 @@ class AuthController extends Controller
     return $this->response([
       'token' => $token,
       'user' => new UserResource($user),
+    ]);
+  }
+
+  public function refresh(): JsonResponse
+  {
+    try {
+      $newToken = JWTAuth::parseToken()->refresh();
+    } catch (JWTException $e) {
+      return $this->response(
+        ['error' => 'Unauthorized'],
+        Response::HTTP_UNAUTHORIZED
+      );
+    }
+
+    return $this->response([
+      'token' => $newToken,
     ]);
   }
 }

@@ -2,9 +2,10 @@
 
 namespace App\Domains\User\Services;
 
-use App\Domains\User\DTOs\UserDTO;
 use App\Domains\User\Interfaces\UserRepositoryInterface;
 use App\Domains\User\Models\User;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 
 class UserService
@@ -29,5 +30,14 @@ class UserService
     }
 
     return null;
+  }
+
+  public function getUsersSortedByPostViews(int $perPage = 20, int $page = 1): LengthAwarePaginator
+  {
+    $cacheKey = "users_sorted_by_views_page_$page";
+
+    return Cache::remember($cacheKey, 60, function () use ($perPage) {
+      return $this->repo->getUsersSortedByPostViews($perPage);
+    });
   }
 }
