@@ -48,7 +48,7 @@ docker-compose exec app php artisan kafka:consume-viewed
 
 ### Notes
 
-- Users default password is : "12345678"
-- Don't forget to run Kafka consumer, if ViewIncrement is set to kafka
+- Users default password is : `12345678`
+- Postman collection for testing APIs is available (`GSMPay.postman_collection`)
+- Don't forget to run Kafka consumer, if `ViewIncrement` is set to kafka (it can change at `strategies` config file )
 - Don't forget to reindex posts after new seeding
-
