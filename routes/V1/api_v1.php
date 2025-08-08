@@ -11,14 +11,14 @@ Route::prefix('v1')->group(function (): void {
   Route::middleware('jwt')->group(function (): void {
     Route::post('/auth/refresh', [AuthController::class, 'refresh'])->name('auth.refresh');
 
-    Route::prefix('user')->group(function (): void {
-      Route::post('/profile', [UserController::class, 'uploadProfile'])->name('user.profile');
-      Route::get('/top-views', [UserController::class, 'topViewedUsers'])->name('user.top_views');
+    Route::prefix('users')->group(function (): void {
+      Route::post('/profile', [UserController::class, 'uploadProfile'])->name('users.profile');
+      Route::get('/top-views', [UserController::class, 'topViewedUsers'])->name('users.top_views');
     });
 
-    Route::prefix('post')->group(function (): void {
-      Route::get('/', [PostController::class, 'index'])->name('post.index');
-      Route::get('/{id}', [PostController::class, 'show'])->name('post.show');
+    Route::prefix('posts')->group(function (): void {
+      Route::get('/', [PostController::class, 'index'])->name('posts.index');
+      Route::get('/{id}', [PostController::class, 'show'])->name('posts.show');
     });
   });
 });

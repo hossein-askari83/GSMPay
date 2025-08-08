@@ -2,7 +2,7 @@
 
 namespace App\Domains\View\Interfaces;
 
-use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 /**
  * Interface for models that can be viewed and have view tracking.
@@ -17,16 +17,16 @@ interface ViewableInterface
   /**
    * Get the morphMany relationship for views associated with this entity.
    *
-   * @return MorphMany
+   * @return \Illuminate\Database\Eloquent\Relations\Relation
    */
-  public function views(): MorphMany;
+  public function views(): Relation;
 
   /**
    * Retrieve the total view count for this entity.
    *
    * @return int
    */
-  public function viewCount(): int;
+  public function viewsCount(): int;
 
   /**
    * Get the unique key for this viewable entity.

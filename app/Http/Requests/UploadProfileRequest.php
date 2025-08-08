@@ -18,7 +18,7 @@ class UploadProfileRequest extends FormRequest
         'required',
         'file',
         'mimes:jpg,jpeg,png,gif',
-        'max:2048',  // max 2MB
+        'max:1024',  // max 1MB
       ],
     ];
   }
@@ -26,7 +26,7 @@ class UploadProfileRequest extends FormRequest
   public function messages(): array
   {
     return [
-      'photo.required' => 'A profile photo is required.',
+      'photo.required' => 'A photo is required.',
       'photo.file' => 'The upload must be a file.',
       'photo.mimes' => 'Allowed file types: jpg, jpeg, png, gif.',
       'photo.max' => 'Maximum file size is 2MB.',

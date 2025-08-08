@@ -26,21 +26,25 @@ class UserRepository implements UserRepositoryInterface
    */
   public function getUsersSortedByPostViews(int $perPage = 20): LengthAwarePaginator
   {
-    return User::query()
-      ->select([
-        'users.id',
-        'users.name',
-        'users.mobile',
-        DB::raw('COALESCE(COUNT(views.id), 0) as total_views'),
-      ])
-      ->leftJoin('posts', 'posts.user_id', '=', 'users.id')
-      ->leftJoin('views', function ($join) {
-        $join->on('views.viewable_id', '=', 'posts.id')
-          ->where('views.viewable_type', Post::class);
-      })
-      ->groupBy('users.id', 'users.name', 'users.mobile')
-      ->orderByDesc('total_views')
-      ->with('profilePhoto')
+    // return User::query()
+    //   ->select([
+    //     'users.id',
+    //     'users.name',
+    //     'users.mobile',
+    //     DB::raw('COALESCE(COUNT(views.id), 0) as total_views'),
+    //   ])
+    //   ->leftJoin('posts', 'posts.user_id', '=', 'users.id')
+    //   ->leftJoin('views', function ($join) {
+    //     $join->on('views.viewable_id', '=', 'posts.id')
+    //       ->where('views.viewable_type', Post::class);
+    //   })
+    //   ->groupBy('users.id', 'users.name', 'users.mobile')
+    //   ->orderByDesc('total_views')
+    //   ->with('profilePhoto')
+    //   ->paginate($perPage);
+
+    return User::with('profilePhoto')
+      ->withCount('views')->orderByDesc('views_count')
       ->paginate($perPage);
 
   }

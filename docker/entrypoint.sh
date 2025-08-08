@@ -9,6 +9,11 @@ if [ ! -f ".env" ]; then
     echo ".env file created."
 fi
 
+if [ ! -f ".env.testing" ]; then
+    cp .env.testing.example .env.testing
+    echo ".env.testing file created."
+fi
+
 # 2. Install dependencies
 composer install --no-interaction --prefer-dist --optimize-autoloader
 

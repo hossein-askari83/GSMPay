@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use App\Domains\View\DTOs\ViewDTO;
-use App\Domains\View\Models\View;
 use App\Domains\View\Repositories\ViewRepository;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Log;
@@ -50,12 +49,14 @@ class ConsumeViewed extends Command
 
       $this->viewRepository->save(ViewDTO::fromArray($data));
 
-      Log::info(sprintf(
+      $message = sprintf(
         'Successfully recorded view for %s with ID %d%s',
         $data['viewable_type'],
         $data['viewable_id'],
         isset($data['user_id']) ? " by user ID {$data['user_id']}" : ''
-      ));
+      );
+      $this->info($message);
+      Log::info($message);
     } catch (QueryException $e) {
       Log::error('Duplicate view skipped: ' . $e->getMessage());
     } catch (\Exception $e) {

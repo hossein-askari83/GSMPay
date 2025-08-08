@@ -25,7 +25,7 @@ class EloquentPostRepository implements PostRepositoryInterface
    */
   public function findAll(): array
   {
-    return Post::with('user.profilePhoto')->get()->toArray();
+    return Post::with('user.profilePhoto', 'user.views')->get()->toArray();
   }
 
   /**
@@ -33,7 +33,7 @@ class EloquentPostRepository implements PostRepositoryInterface
    */
   public function findOne(int $id): ?PostDTO
   {
-    $post = Post::with('user.profilePhoto')->find($id);
+    $post = Post::with('user.profilePhoto', 'user.views')->find($id);
     return $post ? PostDTO::fromModel($post) : null;
   }
 }
