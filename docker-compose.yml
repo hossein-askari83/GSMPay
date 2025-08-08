@@ -36,12 +36,13 @@ services:
     ports:
         - "5432:5432"
     environment:
-        POSTGRES_DB: ${DB_DATABASE:-gsm_pay}
+        # POSTGRES_DB: ${DB_DATABASE:-gsm_pay}
         POSTGRES_USER: ${DB_USERNAME:-postgres}
         POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
         POSTGRES_HOST_AUTH_METHOD: trust
     volumes:
         - ./db_storage:/var/lib/postgresql/data
+        - ./docker/postgres:/docker-entrypoint-initdb.d
     networks:
       - app_net
 

@@ -12,6 +12,7 @@ use App\Http\Resources\GeneralResource;
 use App\Http\Resources\UserResource;
 use App\Http\Requests\UploadProfileRequest;
 use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
@@ -32,7 +33,7 @@ class UserController extends Controller
     $user = $request->user();
     $this->uploadAction->execute($user, $request->file('photo'), );
 
-    return $this->response(new UserResource($user));
+    return $this->response(new UserResource($user), Response::HTTP_CREATED);
   }
 
   /**
