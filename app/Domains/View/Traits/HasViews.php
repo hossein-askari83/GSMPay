@@ -33,8 +33,13 @@ trait HasViews
    *
    * @return int
    */
-  public function viewCount(): int
+  public function viewsCount(): int
   {
     return $this->views()->count();
+  }
+
+  public function getViewableKey(): int
+  {
+    return $this->id;
   }
 }

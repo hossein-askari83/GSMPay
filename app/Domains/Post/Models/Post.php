@@ -26,13 +26,8 @@ class Post extends Model implements ViewableInterface
         return $this->belongsTo(related: User::class);
     }
 
-    protected static function newFactory()
+    protected static function newFactory(): PostFactory
     {
         return PostFactory::new();
-    }
-
-    public function getViewableKey(): int
-    {
-        return $this->id;
     }
 }

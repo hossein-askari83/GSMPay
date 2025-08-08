@@ -33,8 +33,14 @@ class RepositoryServiceProvider extends ServiceProvider
     {
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
         $this->app->bind(FileRepositoryInterface::class, FileRepository::class);
-        $this->app->bind(PostRepositoryInterface::class, ElasticsearchPostRepository::class);
 
+        bind_strategy(
+            app: $this->app,
+            interface: PostRepositoryInterface::class,
+            configKeyDriver: 'strategies.post_repository_driver',
+            configKeyMap: 'strategies.post_repository_map',
+            defaultClass: ElasticsearchPostRepository::class
+        );
     }
 
     /**

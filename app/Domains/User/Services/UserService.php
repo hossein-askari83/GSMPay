@@ -34,8 +34,7 @@ class UserService
 
   public function getUsersSortedByPostViews(int $perPage = 20, int $page = 1): LengthAwarePaginator
   {
-    $cacheKey = "users_sorted_by_views_page_$page";
-
+    $cacheKey = "users_sorted_by_views_page_$page.$perPage";
     return Cache::remember($cacheKey, 60, function () use ($perPage) {
       return $this->repo->getUsersSortedByPostViews($perPage);
     });

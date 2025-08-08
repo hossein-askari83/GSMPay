@@ -6,22 +6,25 @@ use App\Domains\File\Interfaces\FileOwnerInterface;
 use App\Domains\File\Models\File;
 use App\Domains\File\Traits\HasFiles;
 use App\Domains\Post\Models\Post;
+use App\Domains\View\Interfaces\ViewableInterface;
+use App\Domains\View\Models\View;
+use App\Domains\View\Traits\HasViews;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable implements JWTSubject, FileOwnerInterface
+class User extends Authenticatable implements JWTSubject, FileOwnerInterface, ViewableInterface
 {
-    use HasFactory, Notifiable, HasFiles;
+    use HasFactory, Notifiable, HasFiles, HasViews;
 
     protected $fillable = [
         'name',
         'mobile',
-        'password',
         'profile_photo_path',
     ];
 
@@ -65,4 +68,20 @@ class User extends Authenticatable implements JWTSubject, FileOwnerInterface
     {
         return UserFactory::new();
     }
+
+
+    public function views(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            related: View::class,
+            through: Post::class,
+            firstKey: 'user_id',
+            secondKey: 'viewable_id',
+            localKey: 'id',
+            secondLocalKey: 'id'
+        )
+            ->where('viewable_type', Post::class);
+    }
+
+
 }

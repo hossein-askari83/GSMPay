@@ -26,16 +26,29 @@ docker-compose logs -f app
 
 Wait until you see a message like:
 
-**Laravel setup complete!**
+Laravel setup complete!
 
 ### Custom Commands
 
 **Index posts in Elasticsearch**  
-   ```bash
-   docker-compose exec app php artisan posts:index
-   ```
 
-**Start Kafka consumer for view tracking**  
-   ```bash
-   docker-compose exec app php artisan kafka:consume-viewed
-   ```
+Indexes posts in Elasticsearch for efficient searching and retrieval.
+
+```bash
+docker-compose exec app php artisan posts:index
+```
+
+**Start Kafka consumer for view tracking** 
+
+Starts the Kafka consumer to listen for post view events and update view counts.
+
+```bash
+docker-compose exec app php artisan kafka:consume-viewed
+```
+
+### Notes
+
+- Users default password is : "12345678"
+- Don't forget to run Kafka consumer, if ViewIncrement is set to kafka
+- Don't forget to reindex posts after new seeding
+

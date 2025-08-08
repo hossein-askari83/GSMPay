@@ -24,20 +24,17 @@ class ViewServiceProvider extends ServiceProvider
    * Register view counter service bindings.
    *
    * Binds ViewCounterInterface to the appropriate implementation based on
-   * the configuration (database or kafka).(could use a config file)
+   * the configuration (database or kafka).
    */
   public function register(): void
   {
-    $driver = 'kafka';
-
-    $map = [
-      'database' => ViewCounter::class,
-      'kafka' => KafkaViewCounter::class,
-    ];
-
-    $impl = $map[$driver] ?? ViewCounter::class;
-
-    $this->app->bind(ViewCounterInterface::class, $impl);
+    bind_strategy(
+      app: $this->app,
+      interface: ViewCounterInterface::class,
+      configKeyDriver: 'strategies.view_counter_driver',
+      configKeyMap: 'strategies.view_counter_map',
+      defaultClass: ViewCounter::class
+    );
   }
 
   /**
@@ -47,7 +44,12 @@ class ViewServiceProvider extends ServiceProvider
   {
     Event::listen(
       \App\Domains\View\Events\ViewableViewed::class,
-      [\App\Domains\View\Listeners\ViewCountIncrement::class, 'handle']
+      [\App\Domains\View\Listeners\ViewCountIncrement::class, 'handle',]
+    );
+
+    Event::listen(
+      \App\Domains\View\Events\ViewableViewed::class,
+      [\App\Domains\View\Listeners\ReindexViewable::class, 'handle',]
     );
   }
 }

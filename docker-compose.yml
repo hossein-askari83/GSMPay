@@ -39,7 +39,6 @@ services:
         - "5432:5432"
     environment:
         POSTGRES_USER: ${DB_USERNAME:-root}
-        POSTGRES_PASSWORD: ${DB_PASSWORD:-root}
         POSTGRES_HOST_AUTH_METHOD: trust
     volumes:
         - ./db_storage:/var/lib/postgresql/data
@@ -86,7 +85,7 @@ services:
     networks:
       - app_net
     volumes:
-      - esdata:/usr/share/elasticsearch/data
+      - ./esdata:/usr/share/elasticsearch/data
 
   kibana:
     image: docker.elastic.co/kibana/kibana:8.19.0
@@ -101,6 +100,3 @@ services:
 
 networks:
   app_net:
-
-volumes:
-  esdata:

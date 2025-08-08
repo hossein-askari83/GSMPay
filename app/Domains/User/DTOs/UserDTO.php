@@ -13,6 +13,7 @@ class UserDTO
     public string $name,
     public string $mobile,
     public ?FileDTO $profilePhoto = null,
+    public ?int $totalViews = 0,
     public ?string $createdAt = null,
     public ?string $updatedAt = null,
     public ?string $deletedAt = null,
@@ -29,34 +30,35 @@ class UserDTO
       'created_at' => $this->createdAt,
       'updated_at' => $this->updatedAt,
       'deleted_at' => $this->deletedAt,
+      'total_views'=>$this->totalViews
     ];
   }
 
   public static function fromModel(User $user): self
   {
     return new self(
-      $user->id,
-      $user->name,
-      $user->mobile,
-      $user->relationLoaded('profilePhoto') && $user->profilePhoto
+      id: $user->id,
+      name: $user->name,
+      mobile: $user->mobile,
+      profilePhoto: $user->relationLoaded('profilePhoto') && $user->profilePhoto
       ? FileDTO::fromModel($user->profilePhoto)
       : null,
-      $user->created_at?->toIso8601String(),
-      $user->updated_at?->toIso8601String(),
-      $user->deleted_at?->toIso8601String(),
+      totalViews: $user->viewsCount(),
+      createdAt: $user->updated_at?->toIso8601String(),
+      updatedAt: $user->deleted_at?->toIso8601String(),
     );
   }
 
   public static function fromArray(array $data): self
   {
     return new self(
-      $data['id'] ?? null,
-      $data['name'],
-      $data['mobile'],
-      isset($data['profile_photo']) ? FileDTO::fromArray($data['profile_photo']) : null,
-      $data['created_at'] ?? null,
-      $data['updated_at'] ?? null,
-      $data['deleted_at'] ?? null,
+      id: $data['id'] ?? null,
+      name: $data['name'],
+      mobile: $data['mobile'],
+      profilePhoto: isset($data['profile_photo']) ? FileDTO::fromArray($data['profile_photo']) : null,
+      totalViews: $data['total_views']??count($data['views']) ?? 0,
+      createdAt: $data['updated_at'] ?? null,
+      updatedAt: $data['deleted_at'] ?? null,
     );
   }
 }

@@ -35,7 +35,7 @@ it('returns paginated posts from the index endpoint', function () {
   $this->instance(PostService::class, $mockService);
 
   $response = $this->withHeader('Authorization', "Bearer {$token}")
-    ->getJson(route('post.index'));
+    ->getJson(route('posts.index'));
 
   $response->assertStatus(200);
   $response->assertJsonStructure([
@@ -75,7 +75,7 @@ it('shows a post successfully', function () {
   $caller = User::factory()->create();
   $token = JWTAuth::fromUser($caller);
 
-  $response = $this->withHeader('Authorization', "Bearer {$token}")->getJson(route('post.show', $post->id));
+  $response = $this->withHeader('Authorization', "Bearer {$token}")->getJson(route('posts.show', $post->id));
 
 
   $response->assertStatus(200)
@@ -96,7 +96,7 @@ it('returns 404 when post not found', function () {
 
   $caller = User::factory()->create();
   $token = JWTAuth::fromUser($caller);
-  $response = $this->withHeader('Authorization', "Bearer {$token}")->getJson(route('post.show', 1));
+  $response = $this->withHeader('Authorization', "Bearer {$token}")->getJson(route('posts.show', 1));
 
   $response->assertStatus(404)
     ->assertJsonFragment(['message' => 'Post not found']);

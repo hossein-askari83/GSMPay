@@ -17,7 +17,7 @@ it('profile photo upload successfully', function () {
   $token = JWTAuth::fromUser($user);
 
   $response = $this->withHeader('Authorization', "Bearer {$token}")
-    ->post(route('user.profile'), [
+    ->post(route('users.profile'), [
       'photo' => $file,
     ]);
 
@@ -60,14 +60,14 @@ it('returns users sorted by their posts total views', function () {
   $token = JWTAuth::fromUser(User::factory()->create());
 
   $payload = $this->withHeader('Authorization', "Bearer {$token}")
-    ->getJson(route('user.top_views'))
+    ->getJson(route('users.top_views'))
     ->assertStatus(200)
     ->json('data');
 
   $map = collect($payload)->keyBy('id');
 
-  expect((int) ($map[$userA->id]['total_view_count'] ?? $map[$userA->id]['total_views']))->toBe(5)
-    ->and((int) ($map[$userB->id]['total_view_count'] ?? $map[$userB->id]['total_views']))->toBe(2)
-    ->and((int) ($map[$userC->id]['total_view_count'] ?? $map[$userC->id]['total_views']))->toBe(0);
+  expect((int) ($map[$userA->id]['views_count'] ?? $map[$userA->id]['views_count']))->toBe(5)
+    ->and((int) ($map[$userB->id]['views_count'] ?? $map[$userB->id]['views_count']))->toBe(2)
+    ->and((int) ($map[$userC->id]['views_count'] ?? $map[$userC->id]['views_count']))->toBe(0);
 });
 

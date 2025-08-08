@@ -180,24 +180,29 @@ class ElasticsearchService
    */
   public function getIndexData($indexName, $id)
   {
-    $params = [
-      'index' => $indexName,
-      'body' => [
-        'query' => [
-          'match' => [
-            'id' => $id
+    try {
+      $params = [
+        'index' => $indexName,
+        'body' => [
+          'query' => [
+            'match' => [
+              'id' => $id
+            ]
           ]
         ]
-      ]
-    ];
+      ];
 
-    $response = $this->client->search($params);
+      $response = $this->client->search($params);
 
-    if (isset($response['hits']['hits'][0])) {
-      return $response['hits']['hits'][0];
+      if (isset($response['hits']['hits'][0])) {
+        return $response['hits']['hits'][0];
+      }
+
+      return [];
+    } catch (\Throwable $th) {
+      abort(404, "Index not found, index elastic data first");
     }
 
-    return [];
   }
 
   /**

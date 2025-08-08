@@ -31,9 +31,8 @@ class UserController extends Controller
   public function uploadProfile(UploadProfileRequest $request): JsonResponse
   {
     $user = $request->user();
-    $this->uploadAction->execute($user, $request->file('photo'), );
-
-    return $this->response(new UserResource($user), Response::HTTP_CREATED);
+    $this->uploadAction->execute($user, $request->file('photo'));
+    return $this->response(new UserResource($user->fresh()), Response::HTTP_CREATED);
   }
 
   /**
@@ -45,7 +44,6 @@ class UserController extends Controller
   public function topViewedUsers(PaginateRequest $request): JsonResponse
   {
     $users = $this->userService->getUsersSortedByPostViews($request->validated('per_page', 20), $request->validated('page', 1));
-
     return $this->response(UserResource::collection($users));
   }
 }
