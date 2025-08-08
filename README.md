@@ -4,40 +4,38 @@ This is a Laravel 12 application built with PHP 8.3, implementing a user and pos
 
 ## Project Setup
 
-Follow these steps to set up the project locally:
+### Automated Setup via Entrypoint
 
-1. **Build and start Docker containers**  
-   ```bash
-   docker-compose up -d --build
-   ```
+The Docker container uses an `entrypoint.sh` script that automatically performs initial setup tasks such as:
 
-2. **Install PHP dependencies**  
-   ```bash
-   docker-compose exec app composer install
-   ```
+- Copying `.env.example` to `.env` if missing
+- Installing PHP dependencies (`composer install`)
+- Generating application keys (`php artisan key:generate`)
+- Running database migrations and seeding
+- Generating JWT secrets
+- Creating storage symlinks
+- Running tests
 
-3. **Generate application key**  
-   ```bash
-   docker-compose exec app php artisan key:generate
-   ```
+This setup runs **once** when the container starts. You should check the container logs to confirm the setup completed successfully and no errors occurred before proceeding.
 
-4. **Run database migrations and seed data**  
-   ```bash
-   docker-compose exec app php artisan migrate --seed
-   ```
+To view logs and verify setup completion, run:
 
-5. **Index posts in Elasticsearch**  
+```bash
+docker-compose logs -f app
+```
+
+Wait until you see a message like:
+
+**Laravel setup complete!**
+
+### Custom Commands
+
+**Index posts in Elasticsearch**  
    ```bash
    docker-compose exec app php artisan posts:index
    ```
 
-6. **Link storage directory**  
-   Create a symbolic link for file storage:  
-   ```bash
-   docker-compose exec app php artisan storage:link
-   ```
-
-7. **Start Kafka consumer for view tracking**  
+**Start Kafka consumer for view tracking**  
    ```bash
    docker-compose exec app php artisan kafka:consume-viewed
    ```
